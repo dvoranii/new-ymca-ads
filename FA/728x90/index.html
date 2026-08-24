@@ -1,0 +1,423 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="ad.size" content="width=728,height=90" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1 user-scalable=no"
+    />
+
+    <script type="text/javascript">
+      var clickTag = "";
+    </script>
+
+    <style type="text/css">
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #222;
+      }
+      body::before,
+      body::after {
+        display: block;
+        content: "";
+        flex: 2;
+      }
+      body::after {
+        flex: 3;
+      }
+      img,
+      span,
+      div {
+        border: none;
+      }
+
+      [class*="-scene"] {
+        opacity: 0;
+      }
+      [data-scene="0"] .-scene0,
+      [data-scene="1"] .-scene1,
+      [data-scene="2"] .-scene2,
+      [data-scene="3"] .-scene3 {
+        opacity: 1;
+      }
+
+      #canvas {
+        display: block;
+        margin: 0 auto;
+        overflow: hidden;
+        position: relative;
+        flex: none;
+        width: 728px;
+        height: 90px;
+        background: #000;
+      }
+      #canvas::after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 9999999;
+        pointer-events: none;
+      }
+
+      .frame {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      img.abs,
+      .box,
+      .cta {
+        position: absolute;
+        display: block;
+      }
+
+      .bg-photo {
+        top: 0;
+        left: 0;
+        width: 728px;
+        height: 90px;
+        object-fit: cover;
+        transform-origin: center center;
+      }
+
+      .ymca-logo {
+        height: 85px;
+        width: auto;
+        bottom: 0;
+        right: 0;
+      }
+
+      .box {
+        top: 8px;
+        left: 0;
+        width: 250px;
+        height: 74px;
+        background: rgba(255, 255, 255, 0.85);
+        border-radius: 0 10px 10px 0;
+        transition: width 500ms ease;
+      }
+
+      .copy {
+        position: absolute;
+        top: 16px;
+        left: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: 0;
+        font-family: "Trebuchet MS", Verdana, Arial, sans-serif;
+        font-weight: 500;
+        font-size: 23px;
+        line-height: 1.1;
+        color: #89171a;
+      }
+
+      [data-scene="0"] .box {
+        width: 260px;
+      }
+      [data-scene="1"] .box {
+        width: 260px;
+      }
+      [data-scene="2"] .box {
+        width: 260px;
+      }
+
+      @keyframes boxIn {
+        from {
+          opacity: 0;
+          transform: translateX(-30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+      @keyframes textIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes ctaSlideIn {
+        from {
+          transform: translateX(-100%);
+        }
+        to {
+          transform: translateX(0);
+        }
+      }
+      @keyframes bgZoom {
+        from {
+          transform: scale(1);
+        }
+        to {
+          transform: scale(1.08);
+        }
+      }
+
+      [data-scene="0"] .bg-photo {
+        animation: textIn 600ms ease-out both, bgZoom 16300ms linear forwards;
+      }
+      [data-scene="1"] .bg-photo,
+      [data-scene="2"] .bg-photo {
+        animation: bgZoom 16300ms linear forwards;
+      }
+
+      [data-scene="0"] .ymca-logo {
+        animation: textIn 500ms ease-out both;
+        animation-delay: 300ms;
+      }
+      [data-scene="0"] .box {
+        animation: boxIn 450ms ease-out both;
+        animation-delay: 800ms;
+      }
+      [data-scene="0"] .copy.-scene0 {
+        animation: textIn 300ms ease-out both;
+        animation-delay: 1100ms;
+      }
+
+      [data-scene="1"] .copy.-scene1,
+      [data-scene="2"] .copy.-scene2 {
+        animation: textIn 300ms ease-out both;
+        animation-delay: 280ms;
+      }
+
+      .end-card {
+        background: #fff;
+      }
+
+      .headline {
+        position: absolute;
+        top: 10px;
+        left: 30px;
+        margin: 0;
+        font-family: "Trebuchet MS", sans-serif;
+        font-weight: 200;
+        font-size: 33px;
+        line-height: 1;
+        color: #89171a;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .cta {
+        top: 50px;
+        left: 0;
+        width: 440px;
+        height: auto;
+      }
+      .cta img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+      .cta span {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        font-family: "Trebuchet MS", Verdana, Arial, sans-serif;
+        font-weight: 700;
+        font-size: 16px;
+        color: #fff;
+        opacity: 0;
+        white-space: nowrap;
+      }
+
+      .shine-logo {
+        top: 8px;
+        right: 48px;
+        width: 144px;
+      }
+
+      .subhead {
+        position: absolute;
+        bottom: 8px;
+        right: 54px;
+        margin: 0;
+        text-align: center;
+        font-family: "Trebuchet MS", Verdana, Arial, sans-serif;
+        font-size: 11px;
+        line-height: 1.1;
+        color: #525252;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* SCENE 4 ANIMATIONS */
+      [data-scene="3"] .headline {
+        animation: fadeUp 500ms ease-out both;
+      }
+      [data-scene="3"] .cta {
+        animation: ctaSlideIn 450ms ease-out both;
+        animation-delay: 200ms;
+      }
+      [data-scene="3"] .cta span {
+        animation: textIn 300ms ease-out both;
+        animation-delay: 600ms;
+      }
+      [data-scene="3"] .shine-logo {
+        animation: textIn 500ms ease-out both;
+        animation-delay: 450ms;
+      }
+      [data-scene="3"] .subhead {
+        animation: textIn 500ms ease-out both;
+        animation-delay: 600ms;
+      }
+    </style>
+  </head>
+  <body>
+    <a
+      id="canvas"
+      href="javascript:window.open(window.clickTag)"
+      data-frames="[1,0.7,0.7,2]"
+      data-duration="30000"
+      data-iterations="1"
+    >
+      <div class="frame -scene0 -scene1 -scene2">
+        <img
+          class="bg-photo abs -scene0 -scene1 -scene2"
+          src="728x90-BG.png"
+          alt=""
+        />
+        <img
+          class="ymca-logo abs -scene0 -scene1 -scene2"
+          src="YMCA-LOGO-728x90.png"
+          alt=""
+        />
+
+        <div class="box abs -scene0 -scene1 -scene2"></div>
+
+        <p class="copy -scene0">
+          <span
+            >Belon<span style="font-family: Arial, sans-serif; font-size: 22px"
+              >g</span
+            >in<span style="font-family: Arial, sans-serif; font-size: 22px"
+              >g</span
+            >
+            shouldn't</span
+          >
+          <span
+            >have a price ta<span
+              style="font-family: Arial, sans-serif; font-size: 22px"
+              >g</span
+            >.</span
+          >
+        </p>
+        <p class="copy -scene1">
+          <span>Every child deserves</span>
+          <span>the chance to play...</span>
+        </p>
+        <p class="copy -scene2">
+          <span>make new friends,</span>
+          <span>and build confidence.</span>
+        </p>
+      </div>
+
+      <div class="frame -scene3 end-card">
+        <h1 class="headline -scene3">Help send a child to camp.</h1>
+
+        <div class="cta -scene3">
+          <img src="Triangle-728x90.png" alt="" />
+          <span>Donate today!</span>
+        </div>
+
+        <img
+          class="shine-logo abs -scene3"
+          src="shine-on-logo-728x90.png"
+          alt=""
+        />
+        <p class="subhead -scene3">
+          <span
+            >A charity that i<span
+              style="font-family: Arial, sans-serif; font-size: 11px"
+              >g</span
+            >nites the</span
+          ><span>potential in people</span>
+        </p>
+      </div>
+    </a>
+
+    <script>
+      !(function () {
+        var s, y, m, b, o, l, i, c;
+        function u(e) {
+          if (((s = document.getElementById(e)), window.top === window)) {
+            var t = document.head
+              .querySelector('meta[name="ad.size"]')
+              .content.split(",");
+            (s.style.width = parseInt(t[0].split("=")[1], 10) + "px"),
+              (s.style.height = parseInt(t[1].split("=")[1], 10) + "px");
+          }
+          (b = o = parseInt(s.getAttribute("data-iterations"))),
+            this.reScale(
+              JSON.parse(s.getAttribute("data-frames")),
+              parseInt(s.getAttribute("data-duration"))
+            ),
+            (i = m.length - 1),
+            this.animate();
+        }
+        (u.prototype.reScale = function (t, e) {
+          l = o > 0 ? e / o : e;
+          var a = t.reduce(function (t, e) {
+            return t + e;
+          }, 0);
+          m = t.map(function (t) {
+            return (t / a) * l;
+          });
+        }),
+          (u.prototype.goToFrame = function (e) {
+            this.pause(), (b = 0), (i = e), s.setAttribute("data-scene", e);
+          }),
+          (u.prototype.next = function () {
+            return ++i !== m.length || ((i = 0), b--)
+              ? (s.setAttribute("data-scene", i), i)
+              : ((b = o - 1), (i = -1));
+          }),
+          (u.prototype.animate = function () {
+            -1 !== this.next() &&
+              (y = window.setTimeout(this.animate.bind(this), m[i]));
+          }),
+          (u.prototype.pause = function () {
+            y && clearTimeout(y);
+          }),
+          (c = function () {
+            (window.banner = new u("canvas")),
+              document.body.setAttribute("class", "loaded");
+          }),
+          "loading" !== document.readyState
+            ? c()
+            : document.addEventListener("DOMContentLoaded", c);
+      })();
+    </script>
+  </body>
+</html>

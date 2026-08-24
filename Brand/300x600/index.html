@@ -1,0 +1,472 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="ad.size" content="width=300,height=600" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+
+    <script type="text/javascript">
+      var clickTag = "";
+    </script>
+
+    <style type="text/css">
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #222;
+      }
+      body::before,
+      body::after {
+        display: block;
+        content: "";
+        flex: 2;
+      }
+      body::after {
+        flex: 3;
+      }
+      img,
+      span,
+      div {
+        border: none;
+      }
+
+      [class*="-scene"] {
+        opacity: 0;
+      }
+      [data-scene="0"] .-scene0,
+      [data-scene="1"] .-scene1,
+      [data-scene="2"] .-scene2 {
+        opacity: 1;
+      }
+
+      #canvas {
+        display: block;
+        margin: 0 auto;
+        overflow: hidden;
+        position: relative;
+        flex: none;
+        width: 300px;
+        height: 600px;
+        background: #000;
+      }
+      #canvas::after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 9999999;
+        pointer-events: none;
+      }
+
+      .frame {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      img.abs,
+      .box,
+      .shine-logo {
+        position: absolute;
+        display: block;
+      }
+
+      .bg-photo {
+        top: 0;
+        left: 0;
+        width: 300px;
+        height: 600px;
+        object-fit: cover;
+        transform-origin: center center;
+      }
+
+      /* CORNER WHITE BG - Anchored at bottom right */
+      .corner-white-bg {
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+        height: 110px;
+        width: auto;
+        transform-origin: bottom right;
+        z-index: 12;
+        will-change: transform;
+      }
+
+      .ymca-logo {
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+        height: 120px;
+        width: auto;
+        z-index: 13;
+      }
+
+      /* COPY BOX & DYNAMIC RESIZING */
+      .box {
+        top: 200px;
+        left: 0;
+        width: 172px;
+        height: 120px;
+        background: rgba(255, 255, 255, 0.88);
+        border-radius: 0 8px 8px 0;
+        transition: width 500ms ease, height 500ms ease;
+        z-index: 4;
+      }
+
+      .copy {
+        position: absolute;
+        top: 216px;
+        left: 12px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: 0;
+        font-family: "Trebuchet MS", Verdana, Arial, sans-serif;
+        font-weight: 500;
+        font-size: 23px;
+        line-height: 1.15;
+        color: #89171a;
+        z-index: 5;
+      }
+
+      [data-scene="0"] .box {
+        width: 185px;
+      }
+      [data-scene="1"] .box {
+        width: 210px;
+        height: 94px;
+      }
+
+      .red-wipe {
+        position: absolute;
+        top: 0;
+        left: -300px;
+        width: 900px;
+        height: 600px;
+        background-color: #e31837;
+        clip-path: polygon(0 0, 70% 0, 20% 100%, 0 100%);
+        transform: translateX(-100%);
+        z-index: 10;
+        will-change: transform;
+      }
+
+      @keyframes boxIn {
+        from {
+          opacity: 0;
+          transform: translateX(-30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+      @keyframes textIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes fadeOut {
+        from {
+          opacity: 1;
+        }
+        to {
+          opacity: 0;
+        }
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(14px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes bgZoom {
+        from {
+          transform: scale(1);
+        }
+        to {
+          transform: scale(1.08);
+        }
+      }
+
+      /* SCALING WHITE CORNER UP TO COVER CANVAS */
+      @keyframes scaleCornerUp {
+        0% {
+          transform: scale(1);
+          bottom: -1px;
+          right: -1px;
+        }
+        100% {
+          transform: scale(14);
+          bottom: -4px;
+          right: -10px;
+        }
+      }
+
+      /* SLIDING RED BG OVER SCREEN */
+      @keyframes slideRedIn {
+        0% {
+          transform: translateX(-100%);
+        }
+        100% {
+          transform: translateX(300px);
+        }
+      }
+
+      /* SCENE STAGING */
+      [data-scene="0"] .bg-photo {
+        animation: textIn 600ms ease-out both, bgZoom 15000ms linear forwards;
+      }
+      [data-scene="1"] .bg-photo {
+        animation: bgZoom 15000ms linear forwards;
+      }
+
+      [data-scene="0"] .ymca-logo,
+      [data-scene="0"] .corner-white-bg {
+        animation: textIn 500ms ease-out both;
+        animation-delay: 300ms;
+      }
+
+      [data-scene="0"] .box {
+        animation: boxIn 450ms ease-out both;
+        animation-delay: 800ms;
+      }
+      [data-scene="0"] .copy.-scene0 {
+        animation: textIn 300ms ease-out both;
+        animation-delay: 1100ms;
+      }
+
+      [data-scene="1"] .copy.-scene1 {
+        animation: textIn 300ms ease-out both;
+        animation-delay: 280ms;
+      }
+
+      [data-scene="1"] .corner-white-bg {
+        animation: scaleCornerUp 4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        animation-delay: 4500ms;
+      }
+
+      [data-scene="1"] .red-wipe {
+        animation: slideRedIn 800ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        animation-delay: 4500ms;
+      }
+
+      [data-scene="1"] .ymca-logo {
+        animation: fadeOut 400ms ease-out forwards;
+        animation-delay: 4500ms;
+      }
+
+      .end-card {
+        background: #ffffff;
+      }
+
+      .headline {
+        position: absolute;
+        top: 90px;
+        left: 26px;
+        margin: 0;
+        font-family: "Century Gothic", CenturyGothic, AppleGothic, Futura,
+          "Trebuchet MS", sans-serif;
+        font-weight: 300;
+        font-size: 36px;
+        line-height: 1.1;
+        letter-spacing: -0.5px;
+        color: #89171a;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .headline b {
+        font-weight: 900;
+        font-size: 44px;
+        letter-spacing: -0.5px;
+        display: inline-block;
+        margin: 2px 0;
+      }
+
+      .shine-logo {
+        top: 380px;
+        left: 55%;
+        transform: translateX(-50%);
+        width: 213px;
+        height: auto;
+      }
+
+      .subhead {
+        position: absolute;
+        top: 465px;
+        left: 80px;
+        margin: 0;
+        text-align: center;
+        font-family: "Trebuchet MS", Verdana, Arial, sans-serif;
+        font-size: 15px;
+        line-height: 1.2;
+        color: #484848;
+        letter-spacing: 0.2px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      [data-scene="2"] .headline {
+        animation: fadeUp 250ms ease-out both;
+      }
+      [data-scene="2"] .shine-logo {
+        animation: textIn 250ms ease-out both;
+        animation-delay: 100ms;
+      }
+      [data-scene="2"] .subhead {
+        animation: textIn 250ms ease-out both;
+        animation-delay: 200ms;
+      }
+    </style>
+  </head>
+  <body>
+    <a
+      id="canvas"
+      href="javascript:window.open(window.clickTag)"
+      data-frames="[1, 1, 2]"
+      data-duration="20000"
+      data-iterations="1"
+    >
+      <!-- MAIN SCENES (0 & 1) -->
+      <div class="frame -scene0 -scene1">
+        <img class="bg-photo abs -scene0 -scene1" src="300x600-BG.png" alt="" />
+
+        <div class="box abs -scene0 -scene1"></div>
+
+        <p class="copy -scene0">
+          <span>From your first</span>
+          <span
+            >stretch to your<br />stron<span
+              style="font-family: Arial, sans-serif; font-size: 22px"
+              >g</span
+            >est self.</span
+          >
+        </p>
+        <p class="copy -scene1">
+          <span
+            >Experience bein<span
+              style="font-family: Arial, sans-serif; font-size: 22px"
+              >g</span
+            ></span
+          >
+          <span
+            >Greater To<span
+              style="font-family: Arial, sans-serif; font-size: 22px"
+              >g</span
+            >ether.</span
+          >
+        </p>
+
+        <!-- CORNER WHITE BG & LOGO -->
+        <img
+          class="corner-white-bg -scene0 -scene1"
+          src="corner-small.png"
+          alt=""
+        />
+        <img class="ymca-logo -scene0 -scene1" src="YMCA-LOGO.png" alt="" />
+
+        <!-- PURE CSS RED OVERLAY -->
+        <div class="red-wipe -scene1"></div>
+      </div>
+
+      <!-- SCENE 2 (END CARD) -->
+      <div class="frame -scene2 end-card">
+        <h1 class="headline -scene2">
+          <span>Discover</span>
+          <span><b>Gravity</b></span>
+          <span>at the YMCA!</span>
+        </h1>
+
+        <img
+          class="shine-logo abs -scene2"
+          src="shine-on-logo-300x600.png"
+          alt=""
+        />
+
+        <p class="subhead -scene2">
+          <span
+            >A charity that i<span style="font-family: Arial;">g</span>nites
+            the</span
+          >
+          <span>potential in people</span>
+        </p>
+      </div>
+    </a>
+
+    <script type="text/javascript">
+      !(function () {
+        var s, y, m, b, o, l, i, c;
+        function u(e) {
+          if (((s = document.getElementById(e)), window.top === window)) {
+            var t = document.head
+              .querySelector('meta[name="ad.size"]')
+              .content.split(",");
+            (s.style.width = parseInt(t[0].split("=")[1], 10) + "px"),
+              (s.style.height = parseInt(t[1].split("=")[1], 10) + "px");
+          }
+          (b = o = parseInt(s.getAttribute("data-iterations"))),
+            this.reScale(
+              JSON.parse(s.getAttribute("data-frames")),
+              parseInt(s.getAttribute("data-duration"))
+            ),
+            (i = m.length - 1),
+            this.animate();
+        }
+        (u.prototype.reScale = function (t, e) {
+          l = o > 0 ? e / o : e;
+          var a = t.reduce(function (t, e) {
+            return t + e;
+          }, 0);
+          m = t.map(function (t) {
+            return (t / a) * l;
+          });
+        }),
+          (u.prototype.goToFrame = function (e) {
+            this.pause(), (b = 0), (i = e), s.setAttribute("data-scene", e);
+          }),
+          (u.prototype.next = function () {
+            return ++i !== m.length || ((i = 0), b--)
+              ? (s.setAttribute("data-scene", i), i)
+              : ((b = o - 1), (i = -1));
+          }),
+          (u.prototype.animate = function () {
+            -1 !== this.next() &&
+              (y = window.setTimeout(this.animate.bind(this), m[i]));
+          }),
+          (u.prototype.pause = function () {
+            y && clearTimeout(y);
+          }),
+          (c = function () {
+            (window.banner = new u("canvas")),
+              document.body.setAttribute("class", "loaded");
+          }),
+          "loading" !== document.readyState
+            ? c()
+            : document.addEventListener("DOMContentLoaded", c);
+      })();
+    </script>
+  </body>
+</html>

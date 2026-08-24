@@ -1,0 +1,280 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="ad.size" content="width=300,height=50" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1 user-scalable=no"
+    />
+
+    <script type="text/javascript">
+      var clickTag = "";
+    </script>
+
+    <style type="text/css">
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #222;
+      }
+      body::before,
+      body::after {
+        display: block;
+        content: "";
+        flex: 2;
+      }
+      body::after {
+        flex: 3;
+      }
+      img,
+      span,
+      div {
+        border: none;
+      }
+
+      [class*="-scene"] {
+        opacity: 0;
+      }
+      [data-scene="0"] .-scene0,
+      [data-scene="1"] .-scene1 {
+        opacity: 1;
+      }
+
+      #canvas {
+        display: block;
+        margin: 0 auto;
+        overflow: hidden;
+        position: relative;
+        flex: none;
+        width: 300px;
+        height: 50px;
+        background: #000;
+      }
+      #canvas::after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 9999999;
+        pointer-events: none;
+      }
+
+      .frame {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      img.abs,
+      .box {
+        position: absolute;
+        display: block;
+      }
+
+      .bg-photo {
+        top: 0;
+        left: 0;
+        width: 300px;
+        height: 50px;
+        object-fit: cover;
+        transform-origin: center center;
+      }
+
+      .ymca-logo {
+        height: 48px;
+        width: auto;
+        bottom: 0;
+        right: 0;
+        will-change: transform, opacity;
+      }
+
+      @keyframes slideInRight {
+        from {
+          opacity: 0;
+          transform: translateX(100%);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      .copy-scene0 {
+        position: absolute;
+        top: 10px;
+        left: 26px;
+        margin: 0;
+        font-family: "Segoe UI", "Trebuchet MS", Verdana, Light, Arial,
+          sans-serif;
+        font-weight: 600;
+        font-size: 22px;
+        line-height: 1.1;
+        color: #ffffff;
+        text-shadow: 0px 1px 4px rgba(0, 0, 0, 1), 0px 0px 8px rgba(0, 0, 0, 1);
+      }
+
+      @keyframes textIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes bgZoom {
+        from {
+          transform: scale(1);
+        }
+        to {
+          transform: scale(1.08);
+        }
+      }
+
+      [data-scene="0"] .bg-photo {
+        animation: textIn 500ms ease-out both, bgZoom 10000ms linear forwards;
+      }
+
+      [data-scene="0"] .ymca-logo {
+        animation: slideInRight 600ms cubic-bezier(0.25, 1, 0.5, 1) both;
+        animation-delay: 200ms;
+      }
+
+      [data-scene="0"] .copy-scene0 {
+        animation: textIn 400ms ease-out both;
+        animation-delay: 400ms;
+      }
+
+      /* SCENE 1 (END CARD) */
+      .end-card {
+        background: #fff;
+      }
+
+      .headline {
+        position: absolute;
+        top: 8px;
+        left: 10px;
+        margin: 0;
+        font-family: "Trebuchet MS", Verdana, Arial, sans-serif;
+        font-weight: 500;
+        font-size: 15px;
+        line-height: 1.2;
+        color: #525252;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .shine-logo {
+        top: 7px;
+        right: 14px;
+        height: 34px;
+        width: auto;
+      }
+
+      [data-scene="1"] .headline {
+        animation: textIn 400ms ease-out both;
+        animation-delay: 100ms;
+      }
+      [data-scene="1"] .shine-logo {
+        animation: textIn 500ms ease-out both;
+        animation-delay: 200ms;
+      }
+    </style>
+  </head>
+  <body>
+    <a
+      id="canvas"
+      href="javascript:window.open(window.clickTag)"
+      data-frames="[1,1]"
+      data-duration="15000"
+      data-iterations="1"
+    >
+      <!-- SCENE 0 -->
+      <div class="frame -scene0">
+        <img class="bg-photo abs -scene0" src="300x50-BG.png" alt="" />
+        <img class="ymca-logo abs -scene0" src="YMCA-LOGO.png" alt="" />
+        <p class="copy-scene0 -scene0">Greater Together.</p>
+      </div>
+
+      <!-- SCENE 1 -->
+      <div class="frame -scene1 end-card">
+        <h1 class="headline -scene1">
+          <span
+            >A charity that i<span style="font-family: Arial">g</span
+            >nites</span
+          >
+          <span>the potential in people.</span>
+        </h1>
+        <img
+          class="shine-logo abs -scene1"
+          src="shine-on-logo-300x50.png"
+          alt=""
+        />
+      </div>
+    </a>
+
+    <script>
+      !(function () {
+        var s, y, m, b, o, l, i, c;
+        function u(e) {
+          if (((s = document.getElementById(e)), window.top === window)) {
+            var t = document.head
+              .querySelector('meta[name="ad.size"]')
+              .content.split(",");
+            (s.style.width = parseInt(t[0].split("=")[1], 10) + "px"),
+              (s.style.height = parseInt(t[1].split("=")[1], 10) + "px");
+          }
+          (b = o = parseInt(s.getAttribute("data-iterations"))),
+            this.reScale(
+              JSON.parse(s.getAttribute("data-frames")),
+              parseInt(s.getAttribute("data-duration"))
+            ),
+            (i = m.length - 1),
+            this.animate();
+        }
+        (u.prototype.reScale = function (t, e) {
+          l = o > 0 ? e / o : e;
+          var a = t.reduce(function (t, e) {
+            return t + e;
+          }, 0);
+          m = t.map(function (t) {
+            return (t / a) * l;
+          });
+        }),
+          (u.prototype.goToFrame = function (e) {
+            this.pause(), (b = 0), (i = e), s.setAttribute("data-scene", e);
+          }),
+          (u.prototype.next = function () {
+            return ++i !== m.length || ((i = 0), b--)
+              ? (s.setAttribute("data-scene", i), i)
+              : ((b = o - 1), (i = -1));
+          }),
+          (u.prototype.animate = function () {
+            -1 !== this.next() &&
+              (y = window.setTimeout(this.animate.bind(this), m[i]));
+          }),
+          (u.prototype.pause = function () {
+            y && clearTimeout(y);
+          }),
+          (c = function () {
+            (window.banner = new u("canvas")),
+              document.body.setAttribute("class", "loaded");
+          }),
+          "loading" !== document.readyState
+            ? c()
+            : document.addEventListener("DOMContentLoaded", c);
+      })();
+    </script>
+  </body>
+</html>
