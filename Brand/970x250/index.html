@@ -118,9 +118,9 @@
         top: 48px;
         left: 0;
         width: 380px;
-        height: 160px;
+        height: 185px;
         background: rgba(255, 255, 255, 0.85);
-        border-radius: 0 16px 16px 0;
+        border-radius: 0 8px 8px 0;
         transition: width 500ms ease, height 500ms ease, top 500ms ease;
         z-index: 4;
       }
@@ -135,24 +135,21 @@
 
       .copy {
         position: absolute;
-        top: 25px;
-        left: 35px;
-        height: 200px;
-        width: 340px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
         margin: 0;
-        font-family: "Trebuchet MS", Verdana, Arial, sans-serif;
-        font-weight: 500;
-        font-size: 34px;
-        line-height: 1.15;
-        color: #89171a;
         z-index: 5;
+        left: 18px;
+        transform: scaleX(0.95);
+      }
+
+      .copy.-scene0 {
+        width: 250px;
+        top: 78px;
+        left: 22px;
       }
 
       .copy.-scene1 {
-        top: 8px;
+        top: 70px;
+        width: 290px;
       }
 
       .red-wipe {
@@ -161,6 +158,8 @@
         left: 0;
         width: 970px;
         height: 250px;
+        background-color: #e31837;
+        clip-path: polygon(0 0, 58% 0, 44% 100%, 0 100%);
         transform: translateX(-100%);
         z-index: 10;
         will-change: transform;
@@ -229,25 +228,12 @@
         }
       }
 
-      [data-scene="0"] .bg-photo {
-        animation: textIn 600ms ease-out both, bgZoom 16300ms linear forwards;
-      }
       [data-scene="1"] .bg-photo {
         animation: bgZoom 16300ms linear forwards;
-      }
-
-      [data-scene="0"] .ymca-logo {
-        animation: textIn 500ms ease-out both;
-        animation-delay: 300ms;
       }
       [data-scene="1"] .ymca-logo {
         animation: fadeOut 250ms ease-out forwards;
         animation-delay: 4500ms;
-      }
-
-      [data-scene="0"] .corner-white-bg {
-        animation: textIn 500ms ease-out both;
-        animation-delay: 300ms;
       }
 
       [data-scene="0"] .box {
@@ -271,7 +257,7 @@
 
       [data-scene="1"] .red-wipe {
         animation: slideRedIn 750ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        animation-delay: 4500ms;
+        animation-delay: 4300ms;
       }
 
       .end-card {
@@ -280,41 +266,18 @@
 
       .headline {
         position: absolute;
-        top: 35px;
+        top: 38px;
         left: 55px;
         margin: 0;
-        font-family: "Century Gothic", CenturyGothic, AppleGothic, Futura,
-          "Trebuchet MS", sans-serif;
-        font-weight: 300;
-        font-size: 56px;
-        line-height: 1.05;
-        letter-spacing: -0.5px;
-        color: #89171a;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .headline b {
-        font-weight: 900;
-        font-size: 50px;
-        letter-spacing: -1px;
-        display: inline-block;
-        margin: 2px 0;
+        width: 360px;
       }
 
       .subhead {
         position: absolute;
-        top: 165px;
-        right: 34px;
-        width: 320px;
+        bottom: 37px;
+        right: 82px;
+        width: 225px;
         margin: 0;
-        text-align: center;
-        font-family: "Trebuchet MS", Verdana, Arial, sans-serif;
-        font-size: 18px;
-        line-height: 1.1;
-        color: #525252;
-        display: flex;
-        flex-direction: column;
       }
 
       [data-scene="2"] .subhead {
@@ -347,65 +310,33 @@
       data-iterations="1"
     >
       <div class="frame -scene0 -scene1">
-        <img class="bg-photo abs -scene0 -scene1" src="970x250-BG.png" alt="" />
+        <img
+          class="bg-photo abs -scene0 -scene1"
+          src="970x250-BG.webp"
+          alt=""
+        />
 
         <div class="box abs -scene0 -scene1"></div>
 
-        <p class="copy -scene0">
-          <span>From your first</span>
-          <span>stretch to your</span>
-          <span
-            >stron<span style="font-family: Arial, sans-serif; font-size: 32px"
-              >g</span
-            >est self.</span
-          >
-        </p>
-        <p class="copy -scene1">
-          <span
-            >Experience bein<span
-              style="font-family: Arial, sans-serif; font-size: 32px"
-              >g</span
-            ></span
-          >
-          <span
-            >Greater To<span
-              style="font-family: Arial, sans-serif; font-size: 32px"
-              >g</span
-            >ether.</span
-          >
-        </p>
+        <img src="text1-970x250.svg" class="copy -scene0" alt="" />
+
+        <img src="text2-970x250.svg" class="copy -scene1" alt="" />
 
         <img
           class="corner-white-bg -scene0 -scene1"
-          src="corner-small.png"
+          src="corner-white.webp"
           alt=""
         />
-        <img class="ymca-logo -scene0 -scene1" src="YMCA-LOGO.png" alt="" />
-        <img class="red-wipe -scene1" src="corner-Y-red.png" alt="" />
+        <img class="ymca-logo -scene0 -scene1" src="ymca-logo.webp" alt="" />
+        <div class="red-wipe -scene1"></div>
       </div>
 
       <div class="frame -scene2 end-card">
-        <h1 class="headline -scene2">
-          <span>Discover</span>
-          <span> <b>Gravity Class</b></span>
-          <span>at the YMCA!</span>
-        </h1>
+        <img src="text3-970x250.svg" class="headline -scene2" alt="" />
 
-        <img
-          class="shine-logo abs -scene2"
-          src="shine-on-logo-970x250.png"
-          alt=""
-        />
+        <img class="shine-logo abs -scene2" src="shine-on-logo.webp" alt="" />
 
-        <p class="subhead -scene2">
-          <span
-            >A charity that i<span
-              style="font-family: Arial, sans-serif; font-size: 17px"
-              >g</span
-            >nites the</span
-          >
-          <span>potential in people</span>
-        </p>
+        <img src="subhead.svg" class="subhead -scene2" alt="" />
       </div>
     </a>
 
