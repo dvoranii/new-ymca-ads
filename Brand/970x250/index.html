@@ -13,6 +13,9 @@
     </script>
 
     <style type="text/css">
+      /* -------------------------------------------------- */
+      /* 1. BASE LAYOUT & RESET                             */
+      /* -------------------------------------------------- */
       html,
       body {
         padding: 0;
@@ -25,28 +28,22 @@
         align-items: center;
         background: #222;
       }
+
       body::before,
       body::after {
         display: block;
         content: "";
         flex: 2;
       }
+
       body::after {
         flex: 3;
       }
+
       img,
       span,
       div {
         border: none;
-      }
-
-      [class*="-scene"] {
-        opacity: 0;
-      }
-      [data-scene="0"] .-scene0,
-      [data-scene="1"] .-scene1,
-      [data-scene="2"] .-scene2 {
-        opacity: 1;
       }
 
       #canvas {
@@ -59,6 +56,7 @@
         height: 250px;
         background: #000;
       }
+
       #canvas::after {
         content: "";
         display: block;
@@ -78,6 +76,23 @@
         width: 100%;
         height: 100%;
       }
+
+      /* -------------------------------------------------- */
+      /* 2. SCENE VISIBILITY CONTROLLER                     */
+      /* -------------------------------------------------- */
+      [class*="-scene"] {
+        opacity: 0;
+      }
+
+      [data-scene="0"] .-scene0,
+      [data-scene="1"] .-scene1,
+      [data-scene="2"] .-scene2 {
+        opacity: 1;
+      }
+
+      /* -------------------------------------------------- */
+      /* 3. ELEMENT BASE STYLES                             */
+      /* -------------------------------------------------- */
       img.abs,
       .box,
       .shine-logo {
@@ -92,6 +107,45 @@
         height: 250px;
         object-fit: cover;
         transform-origin: center center;
+      }
+
+      .box {
+        position: absolute;
+        top: 48px;
+        left: 0;
+        background: rgba(255, 255, 255, 0.85);
+        border-radius: 0 8px 8px 0;
+        transform: translateX(-100%);
+        will-change: transform;
+      }
+
+      .tab-scene0 {
+        width: 290px;
+        height: 185px;
+        z-index: 4;
+      }
+
+      .tab-scene1 {
+        width: 340px;
+        height: 120px;
+        z-index: 5;
+      }
+
+      .copy {
+        position: absolute;
+        left: 18px;
+        height: auto;
+        margin: 0;
+      }
+
+      .tab-scene0 .copy {
+        top: 30px;
+        width: 250px;
+      }
+
+      .tab-scene1 .copy {
+        top: 22px;
+        width: 290px;
       }
 
       .corner-white-bg {
@@ -114,43 +168,6 @@
         z-index: 13;
       }
 
-      .box {
-        top: 48px;
-        left: 0;
-        width: 380px;
-        height: 185px;
-        background: rgba(255, 255, 255, 0.85);
-        border-radius: 0 8px 8px 0;
-        transition: width 500ms ease, height 500ms ease, top 500ms ease;
-        z-index: 4;
-      }
-
-      [data-scene="0"] .box {
-        width: 290px;
-      }
-      [data-scene="1"] .box {
-        width: 340px;
-        height: 120px;
-      }
-
-      .copy {
-        position: absolute;
-        margin: 0;
-        z-index: 5;
-        left: 18px;
-      }
-
-      .copy.-scene0 {
-        width: 250px;
-        top: 78px;
-        left: 22px;
-      }
-
-      .copy.-scene1 {
-        top: 70px;
-        width: 290px;
-      }
-
       .red-wipe {
         position: absolute;
         top: 0;
@@ -164,48 +181,61 @@
         will-change: transform;
       }
 
-      @keyframes boxIn {
-        from {
-          opacity: 0;
-          transform: translateX(-40px);
-        }
-        to {
-          opacity: 1;
-          transform: translateX(0);
-        }
+      /* End Card Styles */
+      .end-card {
+        background: #ffffff;
       }
-      @keyframes textIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
+
+      .headline {
+        position: absolute;
+        top: 38px;
+        left: 55px;
+        margin: 0;
+        width: 360px;
       }
-      @keyframes fadeUp {
-        from {
-          opacity: 0;
-          transform: translateY(15px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
+
+      .shine-logo {
+        top: 70px;
+        right: 74px;
+        width: 254px;
+        height: auto;
       }
-      @keyframes fadeOut {
-        from {
-          opacity: 1;
-        }
-        to {
-          opacity: 0;
-        }
+
+      .subhead {
+        position: absolute;
+        bottom: 37px;
+        right: 82px;
+        width: 225px;
+        margin: 0;
       }
+
+      /* -------------------------------------------------- */
+      /* 4. KEYFRAME DEFINITIONS                            */
+      /* -------------------------------------------------- */
       @keyframes bgZoom {
         from {
           transform: scale(1);
         }
         to {
           transform: scale(1.08);
+        }
+      }
+
+      @keyframes tabSlideIn {
+        from {
+          transform: translateX(-100%);
+        }
+        to {
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes tabSlideOut {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-100%);
         }
       }
 
@@ -227,28 +257,60 @@
         }
       }
 
-      [data-scene="0"] .bg-photo,
+      @keyframes fadeOut {
+        from {
+          opacity: 1;
+        }
+        to {
+          opacity: 0;
+        }
+      }
+
+      @keyframes textIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(14px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* -------------------------------------------------- */
+      /* 5. SCENE STAGING & TIMELINE CONTROLS               */
+      /* -------------------------------------------------- */
+      /* Scene 0 */
+      [data-scene="0"] .bg-photo {
+        animation: bgZoom 15000ms linear forwards;
+      }
+
+      [data-scene="0"] .tab-scene0 {
+        animation: tabSlideIn 500ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        animation-delay: 500ms;
+      }
+
+      /* Scene 1 */
       [data-scene="1"] .bg-photo {
         animation: bgZoom 15000ms linear forwards;
       }
 
-      [data-scene="1"] .ymca-logo {
-        animation: fadeOut 250ms ease-out forwards;
-        animation-delay: 4500ms;
+      [data-scene="1"] .tab-scene0 {
+        animation: tabSlideOut 400ms cubic-bezier(0.5, 0, 0.75, 0) forwards;
       }
 
-      [data-scene="0"] .box {
-        animation: boxIn 450ms ease-out both;
-        animation-delay: 800ms;
-      }
-      [data-scene="0"] .copy.-scene0 {
-        animation: textIn 300ms ease-out both;
-        animation-delay: 1100ms;
-      }
-
-      [data-scene="1"] .copy.-scene1 {
-        animation: textIn 300ms ease-out both;
-        animation-delay: 280ms;
+      [data-scene="1"] .tab-scene1 {
+        animation: tabSlideIn 500ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        animation-delay: 100ms;
       }
 
       [data-scene="1"] .corner-white-bg {
@@ -261,44 +323,24 @@
         animation-delay: 4300ms;
       }
 
-      .end-card {
-        background: #ffffff;
+      [data-scene="1"] .ymca-logo {
+        animation: fadeOut 250ms ease-out forwards;
+        animation-delay: 4500ms;
       }
 
-      .headline {
-        position: absolute;
-        top: 38px;
-        left: 55px;
-        margin: 0;
-        width: 360px;
+      /* Scene 2 (End Card) */
+      [data-scene="2"] .headline {
+        animation: fadeUp 500ms ease-out both;
       }
 
-      .subhead {
-        position: absolute;
-        bottom: 37px;
-        right: 82px;
-        width: 225px;
-        margin: 0;
+      [data-scene="2"] .shine-logo {
+        animation: textIn 500ms ease-out both;
+        animation-delay: 100ms;
       }
 
       [data-scene="2"] .subhead {
         animation: textIn 350ms ease-out both;
-        animation-delay: 600ms;
-      }
-
-      .shine-logo {
-        top: 70px;
-        right: 74px;
-        width: 254px;
-        height: auto;
-      }
-
-      [data-scene="2"] .headline {
-        animation: fadeUp 500ms ease-out both;
-      }
-      [data-scene="2"] .shine-logo {
-        animation: textIn 500ms ease-out both;
-        animation-delay: 300ms;
+        animation-delay: 200ms;
       }
     </style>
   </head>
@@ -317,11 +359,13 @@
           alt=""
         />
 
-        <div class="box abs -scene0 -scene1"></div>
+        <div class="box tab-scene0 -scene0 -scene1">
+          <img src="text1-970x250.svg" class="copy" alt="" />
+        </div>
 
-        <img src="text1-970x250.svg" class="copy -scene0" alt="" />
-
-        <img src="text2-970x250.svg" class="copy -scene1" alt="" />
+        <div class="box tab-scene1 -scene1">
+          <img src="text2-970x250.svg" class="copy" alt="" />
+        </div>
 
         <img
           class="corner-white-bg -scene0 -scene1"
@@ -329,14 +373,13 @@
           alt=""
         />
         <img class="ymca-logo -scene0 -scene1" src="ymca-logo.webp" alt="" />
+
         <div class="red-wipe -scene1"></div>
       </div>
 
       <div class="frame -scene2 end-card">
         <img src="text3-970x250.svg" class="headline -scene2" alt="" />
-
         <img class="shine-logo abs -scene2" src="shine-on-logo.webp" alt="" />
-
         <img src="subhead.svg" class="subhead -scene2" alt="" />
       </div>
     </a>

@@ -13,6 +13,9 @@
     </script>
 
     <style type="text/css">
+      /* -------------------------------------------------- */
+      /* 1. BASE LAYOUT & RESET                             */
+      /* -------------------------------------------------- */
       html,
       body {
         padding: 0;
@@ -25,29 +28,22 @@
         align-items: center;
         background: #222;
       }
+
       body::before,
       body::after {
         display: block;
         content: "";
         flex: 2;
       }
+
       body::after {
         flex: 3;
       }
+
       img,
       span,
       div {
         border: none;
-      }
-
-      [class*="-scene"] {
-        opacity: 0;
-      }
-      [data-scene="0"] .-scene0,
-      [data-scene="1"] .-scene1,
-      [data-scene="2"] .-scene2,
-      [data-scene="3"] .-scene3 {
-        opacity: 1;
       }
 
       #canvas {
@@ -60,6 +56,7 @@
         height: 100%;
         background: #fff;
       }
+
       #canvas::after {
         content: "";
         display: block;
@@ -79,6 +76,23 @@
         width: 100%;
         height: 100%;
       }
+
+      /* -------------------------------------------------- */
+      /* 2. SCENE VISIBILITY CONTROLLER                     */
+      /* -------------------------------------------------- */
+      [class*="-scene"] {
+        opacity: 0;
+      }
+
+      [data-scene="0"] .-scene0,
+      [data-scene="1"] .-scene1,
+      [data-scene="2"] .-scene2 {
+        opacity: 1;
+      }
+
+      /* -------------------------------------------------- */
+      /* 3. ELEMENT BASE STYLES                             */
+      /* -------------------------------------------------- */
       img.abs,
       .box,
       .cta {
@@ -95,70 +109,49 @@
         transform-origin: center center;
       }
 
-      [data-scene="1"] .bg-photo,
-      [data-scene="2"] .bg-photo {
-        animation: bgZoom 16300ms linear forwards;
-      }
-
       .ymca-logo {
+        position: absolute;
         width: 150px;
         bottom: 0px;
         right: 0px;
       }
 
       .box {
+        position: absolute;
         top: 188px;
         left: 0;
-        width: 220px;
-        height: 62px;
         background: rgba(255, 255, 255, 0.85);
         border-radius: 0 8px 8px 0;
-        transition: width 500ms ease;
+        transform: translateX(-100%);
+        will-change: transform;
       }
+
+      .tab-scene0 {
+        width: 254px;
+        height: 62px;
+        z-index: 4;
+      }
+
+      .tab-scene1 {
+        width: 242px;
+        height: 62px;
+        z-index: 5;
+      }
+
       .copy {
         position: absolute;
-        top: 194px;
+      }
+
+      .tab-scene0 img.copy,
+      .tab-scene1 img.copy {
+        width: 90%;
+        top: 8px;
         left: 8px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        margin: 0;
-        font-family: "Trebuchet MS", Verdana, Arial, sans-serif;
-        font-weight: 500;
-        font-size: 23px;
-        line-height: 1;
-        color: #89171a;
       }
 
-      [data-scene="0"] .box {
-        width: 224px;
-      }
-      [data-scene="1"] .box {
-        width: 254px;
-      }
-      [data-scene="2"] .box {
-        width: 242px;
-      }
-
-      @keyframes boxIn {
-        from {
-          opacity: 0;
-          transform: translateX(-30px);
-        }
-        to {
-          opacity: 1;
-          transform: translateX(0);
-        }
-      }
-      @keyframes textIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }
-
+      /* -------------------------------------------------- */
+      /* 4. KEYFRAME DEFINITIONS                            */
+      /* -------------------------------------------------- */
       @keyframes bgZoom {
         from {
           transform: scale(1);
@@ -168,84 +161,31 @@
         }
       }
 
-      [data-scene="0"] .box {
-        animation: boxIn 450ms ease-out both;
-        animation-delay: 800ms;
+      @keyframes tabSlideIn {
+        from {
+          transform: translateX(-100%);
+        }
+        to {
+          transform: translateX(0);
+        }
       }
 
-      [data-scene="0"] .copy.-scene0 {
-        animation: textIn 300ms ease-out both;
-        animation-delay: 1100ms;
+      @keyframes tabSlideOut {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-100%);
+        }
       }
 
-      [data-scene="1"] .copy.-scene1,
-      [data-scene="2"] .copy.-scene2 {
-        animation: textIn 300ms ease-out both;
-        animation-delay: 280ms;
-      }
-
-      .end-card {
-        background: #fff;
-      }
-
-      .headline {
-        position: absolute;
-        top: 90px;
-        left: 26px;
-        margin: 0;
-        font-family: "Trebuchet MS", Verdana, Arial, sans-serif;
-        font-weight: 500;
-        font-size: 42px;
-        line-height: 1;
-        color: #89171a;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .cta {
-        top: 236px;
-        left: 0;
-        width: 200px;
-      }
-      .cta img {
-        display: block;
-        width: 100%;
-      }
-      .cta span {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 20px;
-        bottom: 0;
-        display: flex;
-        align-items: center;
-        padding-left: 22px;
-        font-family: "Trebuchet MS", Verdana, Arial, sans-serif;
-        font-weight: 700;
-        font-size: 22px;
-        color: #fff;
-        opacity: 0;
-      }
-
-      .shine-logo {
-        top: 408px;
-        left: 55%;
-        width: 210px;
-        transform: translateX(-50%);
-      }
-
-      .subhead {
-        position: absolute;
-        top: 487px;
-        left: 88px;
-        margin: 0;
-        text-align: center;
-        font-family: "Trebuchet MS", Verdana, Arial, sans-serif;
-        font-size: 15px;
-        line-height: 1.1;
-        color: #525252;
-        display: flex;
-        flex-direction: column;
+      @keyframes textIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
       }
 
       @keyframes fadeUp {
@@ -268,22 +208,88 @@
         }
       }
 
-      [data-scene="3"] .headline {
+      /* -------------------------------------------------- */
+      /* 5. SCENE STAGING & TIMELINE CONTROLS               */
+      /* -------------------------------------------------- */
+      [data-scene="0"] .bg-photo,
+      [data-scene="1"] .bg-photo {
+        animation: bgZoom 16300ms linear forwards;
+      }
+
+      [data-scene="0"] .tab-scene0 {
+        animation: tabSlideIn 450ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        animation-delay: 600ms;
+      }
+
+      [data-scene="1"] .tab-scene0 {
+        animation: tabSlideOut 350ms cubic-bezier(0.5, 0, 0.75, 0) forwards;
+      }
+      [data-scene="1"] .tab-scene1 {
+        animation: tabSlideIn 450ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        animation-delay: 100ms;
+      }
+
+      .end-card {
+        background: #fff;
+      }
+
+      .headline {
+        position: absolute;
+        width: 245px;
+        left: 24px;
+        top: 82px;
+      }
+
+      .cta {
+        top: 236px;
+        left: 0;
+        width: 200px;
+      }
+
+      .triangle {
+        display: block;
+        width: 100%;
+      }
+
+      .donate-text {
+        position: absolute;
+        width: 75%;
+        left: 24px;
+        top: 12px;
+      }
+
+      .shine-logo {
+        position: absolute;
+        top: 408px;
+        left: 55%;
+        width: 210px;
+        transform: translateX(-50%);
+      }
+
+      .subhead {
+        position: absolute;
+        bottom: 70px;
+        right: 43px;
+        width: 169px;
+      }
+
+      /* End Card Animations */
+      [data-scene="2"] .headline {
         animation: fadeUp 500ms ease-out both;
       }
-      [data-scene="3"] .cta {
+      [data-scene="2"] .cta {
         animation: ctaSlideIn 450ms ease-out both;
         animation-delay: 200ms;
       }
-      [data-scene="3"] .cta span {
+      [data-scene="2"] .cta span {
         animation: textIn 300ms ease-out both;
         animation-delay: 600ms;
       }
-      [data-scene="3"] .shine-logo {
+      [data-scene="2"] .shine-logo {
         animation: textIn 500ms ease-out both;
         animation-delay: 450ms;
       }
-      [data-scene="3"] .subhead {
+      [data-scene="2"] .subhead {
         animation: textIn 500ms ease-out both;
         animation-delay: 600ms;
       }
@@ -293,76 +299,41 @@
     <a
       id="canvas"
       href="javascript:window.open(window.clickTag)"
-      data-frames="[1,0.8,0.8,0.1]"
-      data-duration="15000"
+      data-frames="[0.7, 0.6, 1.2]"
+      data-duration="18000"
       data-iterations="1"
     >
-      <div class="frame -scene0 -scene1 -scene2">
+      <div class="frame -scene0 -scene1">
         <img
-          class="bg-photo abs -scene0 -scene1 -scene2"
+          class="bg-photo abs -scene0 -scene1"
           src="300x600-BG.webp"
           alt=""
         />
         <img
-          class="ymca-logo abs -scene0 -scene1 -scene2"
+          class="ymca-logo abs -scene0 -scene1"
           src="YMCA-LOGO.webp"
           alt=""
         />
 
-        <div class="box abs -scene0 -scene1 -scene2"></div>
-
-        <p class="copy -scene0">
-          <span
-            >Belon<span style="font-family: Arial, sans-serif; font-size: 22px"
-              >g</span
-            >ing shouldn't</span
-          ><span
-            >have a price ta<span
-              style="font-family: Arial, sans-serif; font-size: 22px"
-              >g</span
-            >.</span
-          >
-        </p>
-        <p class="copy -scene1">
-          <span>Every child deserves</span><span>the chance to explore,</span>
-        </p>
-        <p class="copy -scene2">
-          <span>make new friends,</span><span>and build confidence.</span>
-        </p>
-      </div>
-
-      <div class="frame -scene3 end-card">
-        <h1 class="headline -scene3">
-          <span>Help kids</span>
-          <span
-            >in need
-            <span style="font-family: Arial, sans-serif; font-size: 42px"
-              >g</span
-            >et</span
-          >
-          <span
-            >in the
-            <span style="font-family: Arial, sans-serif; font-size: 42px"
-              >g</span
-            >ame.</span
-          >
-        </h1>
-
-        <div class="cta -scene3">
-          <img src="Triangle.png" alt="" />
-          <span>Donate today!</span>
+        <div class="box tab-scene0 -scene0 -scene1">
+          <img src="text1-300x600.svg" class="copy" alt="" />
         </div>
 
-        <img class="shine-logo abs -scene3" src="shine-on-logo.webp" alt="" />
-        <p class="subhead -scene3">
-          <span
-            >A charity that i<span
-              style="font-family: Arial, sans-serif; font-size: 15px"
-              >g</span
-            >nites the</span
-          >
-          <span>potential in people</span>
-        </p>
+        <div class="box tab-scene1 -scene1">
+          <img src="text2-300x600.svg" class="copy" alt="" />
+        </div>
+      </div>
+
+      <div class="frame -scene2 end-card">
+        <img src="fa-300x600.svg" class="headline -scene2" alt="" />
+
+        <div class="cta -scene2">
+          <img src="Triangle.png" class="triangle" alt="" />
+          <img src="donate-today.svg" class="donate-text" alt="" />
+        </div>
+
+        <img class="shine-logo abs -scene2" src="shine-on-logo.webp" alt="" />
+        <img src="subhead.svg" class="subhead -scene2" alt="" />
       </div>
     </a>
 
