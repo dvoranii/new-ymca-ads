@@ -100,30 +100,11 @@
         will-change: transform, opacity;
       }
 
-      @keyframes slideInRight {
-        from {
-          opacity: 0;
-          transform: translateX(100%);
-        }
-        to {
-          opacity: 1;
-          transform: translateX(0);
-        }
-      }
-      .copy-scene0 {
+      .copy {
         position: absolute;
-        top: 6px;
-        left: 10px;
-        margin: 0;
-        font-family: "Segoe UI", "Trebuchet MS", Verdana, Light, Arial,
-          sans-serif;
-        font-weight: 600;
-        font-size: 16px;
-        line-height: 1.1;
-        color: #ffffff;
-        text-shadow: 0px 1px 4px rgba(0, 0, 0, 1), 0px 0px 8px rgba(0, 0, 0, 1);
-        display: flex;
-        flex-direction: column;
+        top: 0px;
+        width: 190px;
+        left: 4px;
       }
 
       @keyframes textIn {
@@ -144,15 +125,10 @@
       }
 
       [data-scene="0"] .bg-photo {
-        animation: textIn 500ms ease-out both, bgZoom 10000ms linear forwards;
+        animation: bgZoom 10000ms linear forwards;
       }
 
-      [data-scene="0"] .ymca-logo {
-        animation: slideInRight 600ms cubic-bezier(0.25, 1, 0.5, 1) both;
-        animation-delay: 200ms;
-      }
-
-      [data-scene="0"] .copy-scene0 {
+      [data-scene="0"] .copy {
         animation: textIn 400ms ease-out both;
         animation-delay: 400ms;
       }
@@ -163,16 +139,9 @@
 
       .headline {
         position: absolute;
-        top: 8px;
+        width: 148px;
         left: 10px;
-        margin: 0;
-        font-family: "Trebuchet MS", Verdana, Arial, sans-serif;
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 1.2;
-        color: #525252;
-        display: flex;
-        flex-direction: column;
+        top: 10px;
       }
 
       .shine-logo {
@@ -182,11 +151,8 @@
         width: auto;
       }
 
+      [data-scene="1"] .shine-logo,
       [data-scene="1"] .headline {
-        animation: textIn 400ms ease-out both;
-        animation-delay: 100ms;
-      }
-      [data-scene="1"] .shine-logo {
         animation: textIn 500ms ease-out both;
         animation-delay: 200ms;
       }
@@ -197,26 +163,20 @@
       id="canvas"
       href="javascript:window.open(window.clickTag)"
       data-frames="[1,1]"
-      data-duration="15000"
+      data-duration="10000"
       data-iterations="1"
     >
       <div class="frame -scene0">
-        <img class="bg-photo abs -scene0" src="300x50-BG.png" alt="" />
-        <img class="ymca-logo abs -scene0" src="YMCA-LOGO.png" alt="" />
-        <p class="copy-scene0 -scene0">
-          <span>Belonging shouldn't</span>
-          <span>have a price tag.</span>
-        </p>
+        <img class="bg-photo abs -scene0" src="300x50-BG.webp" alt="" />
+        <img class="ymca-logo abs -scene0" src="YMCA-LOGO.webp" alt="" />
+        <img src="text-300x50.svg" class="copy -scene0" alt="" />
       </div>
 
       <div class="frame -scene1 end-card">
-        <h1 class="headline -scene1">
-          <span>A charity that ignites</span>
-          <span>the potential in people.</span>
-        </h1>
+        <img src="charity-300x50.svg" class="headline -scene1" alt="" />
         <img
           class="shine-logo abs -scene1"
-          src="shine-on-logo-300x50.png"
+          src="shine-on-logo-300x50.webp"
           alt=""
         />
       </div>

@@ -13,6 +13,9 @@
     </script>
 
     <style type="text/css">
+      /* -------------------------------------------------- */
+      /* 1. BASE LAYOUT & RESET                             */
+      /* -------------------------------------------------- */
       html,
       body {
         padding: 0;
@@ -25,28 +28,22 @@
         align-items: center;
         background: #222;
       }
+
       body::before,
       body::after {
         display: block;
         content: "";
         flex: 2;
       }
+
       body::after {
         flex: 3;
       }
+
       img,
       span,
       div {
         border: none;
-      }
-
-      [class*="-scene"] {
-        opacity: 0;
-      }
-      [data-scene="0"] .-scene0,
-      [data-scene="1"] .-scene1,
-      [data-scene="2"] .-scene2 {
-        opacity: 1;
       }
 
       #canvas {
@@ -59,6 +56,7 @@
         height: 600px;
         background: #000;
       }
+
       #canvas::after {
         content: "";
         display: block;
@@ -78,6 +76,23 @@
         width: 100%;
         height: 100%;
       }
+
+      /* -------------------------------------------------- */
+      /* 2. SCENE VISIBILITY CONTROLLER                     */
+      /* -------------------------------------------------- */
+      [class*="-scene"] {
+        opacity: 0;
+      }
+
+      [data-scene="0"] .-scene0,
+      [data-scene="1"] .-scene1,
+      [data-scene="2"] .-scene2 {
+        opacity: 1;
+      }
+
+      /* -------------------------------------------------- */
+      /* 3. ELEMENT BASE STYLES                             */
+      /* -------------------------------------------------- */
       img.abs,
       .box,
       .shine-logo {
@@ -94,7 +109,44 @@
         transform-origin: center center;
       }
 
-      /* CORNER WHITE BG - Anchored at bottom right */
+      .box {
+        position: absolute;
+        top: 200px;
+        left: 0;
+        background: rgba(255, 255, 255, 0.88);
+        border-radius: 0 8px 8px 0;
+        transform: translateX(-100%);
+        will-change: transform;
+      }
+
+      .tab-scene0 {
+        width: 185px;
+        height: 120px;
+        z-index: 4;
+      }
+
+      .tab-scene1 {
+        width: 210px;
+        height: 92px;
+        z-index: 5;
+      }
+
+      .copy {
+        position: absolute;
+        left: 13px;
+        height: auto;
+      }
+
+      .tab-scene0 .copy {
+        top: 21px;
+        width: 155px;
+      }
+
+      .tab-scene1 .copy {
+        top: 24px;
+        width: 180px;
+      }
+
       .corner-white-bg {
         position: absolute;
         bottom: 0px;
@@ -115,42 +167,6 @@
         z-index: 13;
       }
 
-      /* COPY BOX & DYNAMIC RESIZING */
-      .box {
-        top: 200px;
-        left: 0;
-        width: 172px;
-        height: 120px;
-        background: rgba(255, 255, 255, 0.88);
-        border-radius: 0 8px 8px 0;
-        transition: width 500ms ease, height 500ms ease;
-        z-index: 4;
-      }
-
-      .copy {
-        position: absolute;
-        top: 216px;
-        left: 12px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        margin: 0;
-        font-family: "Trebuchet MS", Verdana, Arial, sans-serif;
-        font-weight: 500;
-        font-size: 23px;
-        line-height: 1.15;
-        color: #89171a;
-        z-index: 5;
-      }
-
-      [data-scene="0"] .box {
-        width: 185px;
-      }
-      [data-scene="1"] .box {
-        width: 210px;
-        height: 94px;
-      }
-
       .red-wipe {
         position: absolute;
         top: 0;
@@ -164,42 +180,36 @@
         will-change: transform;
       }
 
-      @keyframes boxIn {
-        from {
-          opacity: 0;
-          transform: translateX(-30px);
-        }
-        to {
-          opacity: 1;
-          transform: translateX(0);
-        }
+      /* End Card Styles */
+      .end-card {
+        background: #ffffff;
       }
-      @keyframes textIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
+
+      .headline {
+        position: absolute;
+        width: 225px;
+        top: 118px;
+        left: 34px;
       }
-      @keyframes fadeOut {
-        from {
-          opacity: 1;
-        }
-        to {
-          opacity: 0;
-        }
+
+      .shine-logo {
+        top: 380px;
+        left: 55%;
+        transform: translateX(-50%);
+        width: 213px;
+        height: auto;
       }
-      @keyframes fadeUp {
-        from {
-          opacity: 0;
-          transform: translateY(14px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
+
+      .subhead {
+        position: absolute;
+        width: 173px;
+        right: 48px;
+        bottom: 97px;
       }
+
+      /* -------------------------------------------------- */
+      /* 4. KEYFRAME DEFINITIONS                            */
+      /* -------------------------------------------------- */
       @keyframes bgZoom {
         from {
           transform: scale(1);
@@ -209,7 +219,24 @@
         }
       }
 
-      /* SCALING WHITE CORNER UP TO COVER CANVAS */
+      @keyframes tabSlideIn {
+        from {
+          transform: translateX(-100%);
+        }
+        to {
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes tabSlideOut {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-100%);
+        }
+      }
+
       @keyframes scaleCornerUp {
         0% {
           transform: scale(1);
@@ -223,7 +250,6 @@
         }
       }
 
-      /* SLIDING RED BG OVER SCREEN */
       @keyframes slideRedIn {
         0% {
           transform: translateX(-100%);
@@ -233,26 +259,60 @@
         }
       }
 
-      /* SCENE STAGING */
-      [data-scene="0"] .bg-photo {
-        animation: textIn 600ms ease-out both, bgZoom 15000ms linear forwards;
+      @keyframes fadeOut {
+        from {
+          opacity: 1;
+        }
+        to {
+          opacity: 0;
+        }
       }
+
+      @keyframes textIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(14px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* -------------------------------------------------- */
+      /* 5. SCENE STAGING & TIMELINE CONTROLS               */
+      /* -------------------------------------------------- */
+      /* Scene 0 */
+      [data-scene="0"] .bg-photo {
+        animation: bgZoom 15000ms linear forwards;
+      }
+
+      [data-scene="0"] .tab-scene0 {
+        animation: tabSlideIn 500ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        animation-delay: 500ms;
+      }
+
+      /* Scene 1 */
       [data-scene="1"] .bg-photo {
         animation: bgZoom 15000ms linear forwards;
       }
 
-      [data-scene="0"] .box {
-        animation: boxIn 450ms ease-out both;
-        animation-delay: 800ms;
-      }
-      [data-scene="0"] .copy.-scene0 {
-        animation: textIn 300ms ease-out both;
-        animation-delay: 1100ms;
+      [data-scene="1"] .tab-scene0 {
+        animation: tabSlideOut 400ms cubic-bezier(0.5, 0, 0.75, 0) forwards;
       }
 
-      [data-scene="1"] .copy.-scene1 {
-        animation: textIn 300ms ease-out both;
-        animation-delay: 280ms;
+      [data-scene="1"] .tab-scene1 {
+        animation: tabSlideIn 500ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        animation-delay: 100ms;
       }
 
       [data-scene="1"] .corner-white-bg {
@@ -270,66 +330,16 @@
         animation-delay: 4500ms;
       }
 
-      .end-card {
-        background: #ffffff;
-      }
-
-      .headline {
-        position: absolute;
-        top: 90px;
-        left: 26px;
-        margin: 0;
-        font-family: "Century Gothic", CenturyGothic, AppleGothic, Futura,
-          "Trebuchet MS", sans-serif;
-        font-weight: 300;
-        font-size: 36px;
-        line-height: 1.1;
-        letter-spacing: -0.5px;
-        color: #89171a;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .headline b {
-        font-weight: 900;
-        font-size: 44px;
-        letter-spacing: -0.5px;
-        display: inline-block;
-        margin: 2px 0;
-      }
-
-      .shine-logo {
-        top: 380px;
-        left: 55%;
-        transform: translateX(-50%);
-        width: 213px;
-        height: auto;
-      }
-
-      .subhead {
-        position: absolute;
-        top: 465px;
-        left: 80px;
-        margin: 0;
-        text-align: center;
-        font-family: "Trebuchet MS", Verdana, Arial, sans-serif;
-        font-size: 15px;
-        line-height: 1.2;
-        color: #484848;
-        letter-spacing: 0.2px;
-        display: flex;
-        flex-direction: column;
-      }
-
+      /* Scene 2 (End Card) */
       [data-scene="2"] .headline {
         animation: fadeUp 250ms ease-out both;
       }
+
       [data-scene="2"] .shine-logo {
         animation: textIn 250ms ease-out both;
         animation-delay: 100ms;
       }
+
       [data-scene="2"] .subhead {
         animation: textIn 250ms ease-out both;
         animation-delay: 200ms;
@@ -344,69 +354,39 @@
       data-duration="20000"
       data-iterations="1"
     >
-      <!-- MAIN SCENES (0 & 1) -->
       <div class="frame -scene0 -scene1">
-        <img class="bg-photo abs -scene0 -scene1" src="300x600-BG.png" alt="" />
-
-        <div class="box abs -scene0 -scene1"></div>
-
-        <p class="copy -scene0">
-          <span>From your first</span>
-          <span
-            >stretch to your<br />stron<span
-              style="font-family: Arial, sans-serif; font-size: 22px"
-              >g</span
-            >est self.</span
-          >
-        </p>
-        <p class="copy -scene1">
-          <span
-            >Experience bein<span
-              style="font-family: Arial, sans-serif; font-size: 22px"
-              >g</span
-            ></span
-          >
-          <span
-            >Greater To<span
-              style="font-family: Arial, sans-serif; font-size: 22px"
-              >g</span
-            >ether.</span
-          >
-        </p>
-
-        <!-- CORNER WHITE BG & LOGO -->
         <img
-          class="corner-white-bg -scene0 -scene1"
-          src="corner-small.png"
+          class="bg-photo abs -scene0 -scene1"
+          src="300x600-BG.webp"
           alt=""
         />
-        <img class="ymca-logo -scene0 -scene1" src="YMCA-LOGO.png" alt="" />
 
-        <!-- PURE CSS RED OVERLAY -->
+        <div class="box tab-scene0 -scene0 -scene1">
+          <img src="text1-300x600.svg" class="copy" alt="" />
+        </div>
+
+        <div class="box tab-scene1 -scene1">
+          <img src="text2-300x600.svg" class="copy" alt="" />
+        </div>
+
+        <img
+          class="corner-white-bg -scene0 -scene1"
+          src="corner-small.webp"
+          alt=""
+        />
+        <img class="ymca-logo -scene0 -scene1" src="YMCA-LOGO.webp" alt="" />
+
         <div class="red-wipe -scene1"></div>
       </div>
 
-      <!-- SCENE 2 (END CARD) -->
       <div class="frame -scene2 end-card">
-        <h1 class="headline -scene2">
-          <span>Discover</span>
-          <span><b>Gravity</b></span>
-          <span>at the YMCA!</span>
-        </h1>
-
+        <img src="text3-300x600.svg" class="headline -scene2" alt="" />
         <img
           class="shine-logo abs -scene2"
-          src="shine-on-logo-300x600.png"
+          src="shine-on-logo-300x600.webp"
           alt=""
         />
-
-        <p class="subhead -scene2">
-          <span
-            >A charity that i<span style="font-family: Arial">g</span>nites
-            the</span
-          >
-          <span>potential in people</span>
-        </p>
+        <img src="subhead.svg" class="subhead -scene2" alt="" />
       </div>
     </a>
 
