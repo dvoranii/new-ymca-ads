@@ -187,8 +187,9 @@
       .headline {
         position: absolute;
         width: 400px;
-        top: 28px;
+        top: 50%;
         left: 64px;
+        transform: translateY(-50%);
       }
 
       .headline b {
@@ -224,19 +225,23 @@
 
       @keyframes tabSlideIn {
         from {
-          transform: translateX(-100%);
+          opacity: 0;
+          transform: translateX(-150px);
         }
         to {
+          opacity: 1;
           transform: translateX(0);
         }
       }
 
       @keyframes tabSlideOut {
         from {
+          opacity: 1;
           transform: translateX(0);
         }
         to {
-          transform: translateX(-100%);
+          opacity: 0;
+          transform: translateX(-150px);
         }
       }
 
@@ -277,13 +282,13 @@
       }
 
       @keyframes fadeUp {
-        from {
+        0% {
           opacity: 0;
-          transform: translateY(8px);
+          transform: translateY(150px);
         }
-        to {
+        100% {
           opacity: 1;
-          transform: translateY(0);
+          transform: translateY(-50%);
         }
       }
 
@@ -294,9 +299,9 @@
       [data-scene="0"] .bg-photo {
         animation: bgZoom 15000ms linear forwards;
       }
-
       [data-scene="0"] .tab-scene0 {
-        animation: tabSlideIn 500ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        animation: tabSlideIn 640ms cubic-bezier(0.25, 0.46, 0.45, 0.94)
+          forwards;
         animation-delay: 450ms;
       }
 
@@ -304,44 +309,34 @@
       [data-scene="1"] .bg-photo {
         animation: bgZoom 15000ms linear forwards;
       }
-
       [data-scene="1"] .tab-scene0 {
         animation: tabSlideOut 400ms cubic-bezier(0.5, 0, 0.75, 0) forwards;
       }
-
       [data-scene="1"] .tab-scene1 {
-        animation: tabSlideIn 500ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
-        animation-delay: 100ms;
+        animation: tabSlideIn 640ms 320ms cubic-bezier(0.25, 0.46, 0.45, 0.94)
+          forwards;
       }
-
       [data-scene="1"] .corner-white-bg {
-        animation: scaleCornerUp 4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-        animation-delay: 4500ms;
+        animation: scaleCornerUp 4000ms 4500ms cubic-bezier(0.25, 1, 0.5, 1)
+          forwards;
       }
-
       [data-scene="1"] .red-wipe {
-        animation: slideRedIn 800ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
-        animation-delay: 4500ms;
+        animation: slideRedIn 800ms 4500ms cubic-bezier(0.25, 1, 0.5, 1)
+          forwards;
       }
-
       [data-scene="1"] .ymca-logo {
-        animation: fadeOut 400ms ease-out forwards;
-        animation-delay: 4500ms;
+        animation: fadeOut 400ms 4500ms ease-out forwards;
       }
 
       /* Scene 2 (End Card) */
       [data-scene="2"] .headline {
-        animation: fadeUp 250ms ease-out both;
+        animation: fadeUp 640ms 320ms cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
       }
-
       [data-scene="2"] .shine-logo {
-        animation: textIn 250ms ease-out both;
-        animation-delay: 100ms;
+        animation: textIn 250ms 100ms ease-out both;
       }
-
       [data-scene="2"] .subhead {
-        animation: textIn 250ms ease-out both;
-        animation-delay: 200ms;
+        animation: textIn 250ms 200ms ease-out both;
       }
     </style>
   </head>

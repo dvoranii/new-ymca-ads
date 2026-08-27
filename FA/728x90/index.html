@@ -5,7 +5,7 @@
     <meta name="ad.size" content="width=728,height=90" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1 user-scalable=no"
+      content="width=device-width, initial-scale=1, user-scalable=no"
     />
 
     <script type="text/javascript">
@@ -141,98 +141,16 @@
         position: absolute;
       }
 
-      /* -------------------------------------------------- */
-      /* 4. KEYFRAME DEFINITIONS                            */
-      /* -------------------------------------------------- */
-      @keyframes bgZoom {
-        from {
-          transform: scale(1);
-        }
-        to {
-          transform: scale(1.16);
-        }
-      }
-
-      @keyframes tabSlideIn {
-        from {
-          transform: translateX(-100%);
-        }
-        to {
-          transform: translateX(0);
-        }
-      }
-
-      @keyframes tabSlideOut {
-        from {
-          transform: translateX(0);
-        }
-        to {
-          transform: translateX(-100%);
-        }
-      }
-
-      @keyframes textIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }
-
-      @keyframes fadeUp {
-        from {
-          opacity: 0;
-          transform: translateY(10px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      @keyframes ctaSlideIn {
-        from {
-          transform: translateX(-100%);
-        }
-        to {
-          transform: translateX(0);
-        }
-      }
-
-      /* -------------------------------------------------- */
-      /* 5. SCENE STAGING & TIMELINE CONTROLS               */
-      /* -------------------------------------------------- */
-      [data-scene="0"] .bg-photo,
-      [data-scene="1"] .bg-photo {
-        animation: bgZoom 16300ms linear forwards;
-      }
-
-      /* Scene 0 ("Every child deserves...") */
-      [data-scene="0"] .tab-scene0 {
-        animation: tabSlideIn 450ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
-        animation-delay: 600ms;
-      }
-
-      /* Scene 1 ("make new friends...") */
-      [data-scene="1"] .tab-scene0 {
-        animation: tabSlideOut 350ms cubic-bezier(0.5, 0, 0.75, 0) forwards;
-      }
-      [data-scene="1"] .tab-scene1 {
-        animation: tabSlideIn 450ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
-        animation-delay: 100ms;
-      }
-
-      /* End Card Styles */
       .end-card {
         background: #fff;
       }
 
       .headline {
         position: absolute;
-        top: 10px;
+        top: 30px;
         left: 30px;
         width: 395px;
+        transform: translateY(-50%);
       }
 
       .cta {
@@ -256,13 +174,13 @@
       }
 
       .tab-scene0 img.copy {
-        width: 83%;
+        width: 222px;
         left: 16px;
         top: 13px;
       }
 
       .tab-scene1 img.copy {
-        width: 86%;
+        width: 223px;
         left: 16px;
         top: 14px;
       }
@@ -281,25 +199,105 @@
         width: 133px;
       }
 
-      /* End Card Animations */
+      /* -------------------------------------------------- */
+      /* 4. KEYFRAME DEFINITIONS                            */
+      /* -------------------------------------------------- */
+      @keyframes bgZoom {
+        from {
+          transform: scale(1);
+        }
+        to {
+          transform: scale(1.16);
+        }
+      }
+
+      @keyframes tabSlideIn {
+        from {
+          opacity: 0;
+          transform: translateX(-150px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes tabSlideOut {
+        from {
+          opacity: 1;
+          transform: translateX(0);
+        }
+        to {
+          opacity: 0;
+          transform: translateX(-150px);
+        }
+      }
+
+      @keyframes textIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes fadeUp {
+        0% {
+          opacity: 0;
+          transform: translateY(150px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(-50%);
+        }
+      }
+
+      @keyframes ctaSlideIn {
+        from {
+          transform: translateX(-100%);
+        }
+        to {
+          transform: translateX(0);
+        }
+      }
+
+      /* -------------------------------------------------- */
+      /* 5. SCENE STAGING & TIMELINE CONTROLS               */
+      /* -------------------------------------------------- */
+      [data-scene="0"] .bg-photo,
+      [data-scene="1"] .bg-photo {
+        animation: bgZoom 16300ms linear forwards;
+      }
+
+      [data-scene="0"] .tab-scene0 {
+        animation: tabSlideIn 640ms cubic-bezier(0.25, 0.46, 0.45, 0.94)
+          forwards;
+        animation-delay: 600ms;
+      }
+
+      [data-scene="1"] .tab-scene0 {
+        animation: tabSlideOut 400ms cubic-bezier(0.5, 0, 0.75, 0) forwards;
+      }
+      [data-scene="1"] .tab-scene1 {
+        animation: tabSlideIn 640ms 320ms cubic-bezier(0.25, 0.46, 0.45, 0.94)
+          forwards;
+      }
+
       [data-scene="2"] .headline {
-        animation: fadeUp 500ms ease-out both;
+        animation: fadeUp 640ms 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
       }
+
       [data-scene="2"] .cta {
-        animation: ctaSlideIn 450ms ease-out both;
-        animation-delay: 200ms;
+        animation: ctaSlideIn 450ms 200ms ease-out both;
       }
-      [data-scene="2"] .cta span {
-        animation: textIn 300ms ease-out both;
-        animation-delay: 600ms;
-      }
+
       [data-scene="2"] .shine-logo {
-        animation: textIn 500ms ease-out both;
-        animation-delay: 450ms;
+        animation: textIn 500ms 450ms ease-out both;
       }
+
       [data-scene="2"] .subhead {
-        animation: textIn 500ms ease-out both;
-        animation-delay: 600ms;
+        animation: textIn 500ms 600ms ease-out both;
       }
     </style>
   </head>
@@ -341,7 +339,7 @@
       </div>
     </a>
 
-    <script>
+    <script type="text/javascript">
       !(function () {
         var s, y, m, b, o, l, i, c;
         function u(e) {
