@@ -187,16 +187,10 @@
 
       .shine-logo {
         position: absolute;
-        top: 8px;
-        right: 51px;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 60px;
         width: 136px;
-      }
-
-      .subhead {
-        position: absolute;
-        right: 52px;
-        bottom: 5px;
-        width: 133px;
       }
 
       /* -------------------------------------------------- */
@@ -295,10 +289,6 @@
       [data-scene="2"] .shine-logo {
         animation: textIn 500ms 450ms ease-out both;
       }
-
-      [data-scene="2"] .subhead {
-        animation: textIn 500ms 600ms ease-out both;
-      }
     </style>
   </head>
   <body>
@@ -335,7 +325,6 @@
         </div>
 
         <img class="shine-logo abs -scene2" src="shine-on-logo.webp" alt="" />
-        <img src="subhead.svg" class="subhead -scene2" alt="" />
       </div>
     </a>
 
