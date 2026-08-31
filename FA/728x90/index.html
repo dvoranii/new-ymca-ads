@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8" />
@@ -95,9 +95,13 @@
       /* -------------------------------------------------- */
       img.abs,
       .box,
-      .cta {
+      .cta,
+      .shine-logo {
         position: absolute;
         display: block;
+        will-change: transform;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
       }
 
       .bg-photo {
@@ -109,14 +113,6 @@
         transform-origin: center center;
       }
 
-      .ymca-logo {
-        position: absolute;
-        height: 85px;
-        width: auto;
-        bottom: 0;
-        right: 0;
-      }
-
       .box {
         position: absolute;
         top: 8px;
@@ -126,7 +122,6 @@
         background: rgba(255, 255, 255, 0.85);
         border-radius: 0 10px 10px 0;
         transform: translateX(-100%);
-        will-change: transform;
       }
 
       .tab-scene0 {
@@ -141,6 +136,52 @@
         position: absolute;
       }
 
+      .tab-scene0 img.copy {
+        width: 222px;
+        left: 16px;
+        top: 13px;
+      }
+
+      .tab-scene1 img.copy {
+        width: 223px;
+        left: 16px;
+        top: 14px;
+      }
+
+      .corner-white-bg {
+        position: absolute;
+        bottom: -1px;
+        right: -1px;
+        height: 75px;
+        width: auto;
+        transform-origin: bottom right;
+        z-index: 12;
+        will-change: transform;
+      }
+
+      .ymca-logo {
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+        height: 85px;
+        width: auto;
+        z-index: 13;
+      }
+
+      .red-wipe {
+        position: absolute;
+        top: 0;
+        left: -300px;
+        width: 1400px;
+        height: 90px;
+        background-color: #e31837;
+        clip-path: polygon(0 0, 75% 0, 45% 100%, 0 100%);
+        transform: translateX(-100%);
+        z-index: 10;
+        will-change: transform;
+      }
+
+      /* End Card Styles */
       .end-card {
         background: #fff;
       }
@@ -151,6 +192,7 @@
         left: 30px;
         width: 395px;
         transform: translateY(-50%);
+        z-index: 15;
       }
 
       .cta {
@@ -158,6 +200,8 @@
         left: 0;
         width: 440px;
         height: auto;
+        transform: translateX(-440px);
+        z-index: 16;
       }
 
       .triangle {
@@ -173,24 +217,13 @@
         left: 317px;
       }
 
-      .tab-scene0 img.copy {
-        width: 222px;
-        left: 16px;
-        top: 13px;
-      }
-
-      .tab-scene1 img.copy {
-        width: 223px;
-        left: 16px;
-        top: 14px;
-      }
-
       .shine-logo {
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
         right: 60px;
         width: 136px;
+        z-index: 15;
       }
 
       /* -------------------------------------------------- */
@@ -227,6 +260,33 @@
         }
       }
 
+      @keyframes scaleCornerUp {
+        0% {
+          transform: scale(1);
+        }
+        100% {
+          transform: scale(18);
+        }
+      }
+
+      @keyframes slideRedIn {
+        0% {
+          transform: translateX(-100%);
+        }
+        100% {
+          transform: translateX(0%);
+        }
+      }
+
+      @keyframes fadeOut {
+        from {
+          opacity: 1;
+        }
+        to {
+          opacity: 0;
+        }
+      }
+
       @keyframes textIn {
         from {
           opacity: 0;
@@ -249,7 +309,7 @@
 
       @keyframes ctaSlideIn {
         from {
-          transform: translateX(-100%);
+          transform: translateX(-440px);
         }
         to {
           transform: translateX(0);
@@ -259,17 +319,19 @@
       /* -------------------------------------------------- */
       /* 5. SCENE STAGING & TIMELINE CONTROLS               */
       /* -------------------------------------------------- */
-      [data-scene="0"] .bg-photo,
-      [data-scene="1"] .bg-photo {
+      /* Scene 0 */
+      [data-scene="0"] .bg-photo {
         animation: bgZoom 16300ms linear forwards;
       }
-
       [data-scene="0"] .tab-scene0 {
-        animation: tabSlideIn 640ms cubic-bezier(0.25, 0.46, 0.45, 0.94)
+        animation: tabSlideIn 400ms 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94)
           forwards;
-        animation-delay: 600ms;
       }
 
+      /* Scene 1 */
+      [data-scene="1"] .bg-photo {
+        animation: bgZoom 15000ms linear forwards;
+      }
       [data-scene="1"] .tab-scene0 {
         animation: tabSlideOut 400ms cubic-bezier(0.5, 0, 0.75, 0) forwards;
       }
@@ -277,17 +339,27 @@
         animation: tabSlideIn 640ms 320ms cubic-bezier(0.25, 0.46, 0.45, 0.94)
           forwards;
       }
-
+      [data-scene="1"] .corner-white-bg {
+        animation: scaleCornerUp 4000ms 4500ms cubic-bezier(0.25, 1, 0.5, 1)
+          forwards;
+      }
+      [data-scene="1"] .red-wipe {
+        animation: slideRedIn 800ms 4500ms cubic-bezier(0.25, 1, 0.5, 1)
+          forwards;
+      }
+      [data-scene="1"] .ymca-logo {
+        animation: fadeOut 400ms 4500ms ease-out forwards;
+      }
+      /* Scene 2 (End Card) */
       [data-scene="2"] .headline {
-        animation: fadeUp 640ms 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+        animation: fadeUp 640ms 320ms cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
       }
 
       [data-scene="2"] .cta {
-        animation: ctaSlideIn 450ms 200ms ease-out both;
+        animation: ctaSlideIn 440ms 1s cubic-bezier(0.22, 0.61, 0.36, 1) both;
       }
-
       [data-scene="2"] .shine-logo {
-        animation: textIn 500ms 450ms ease-out both;
+        animation: textIn 250ms 100ms ease-out both;
       }
     </style>
   </head>
@@ -295,17 +367,12 @@
     <a
       id="canvas"
       href="javascript:window.open(window.clickTag)"
-      data-frames="[0.7, 0.6, 1.5]"
-      data-duration="18000"
+      data-frames="[1, 1, 2]"
+      data-duration="20000"
       data-iterations="1"
     >
       <div class="frame -scene0 -scene1">
         <img class="bg-photo abs -scene0 -scene1" src="728x90-BG.webp" alt="" />
-        <img
-          class="ymca-logo abs -scene0 -scene1"
-          src="YMCA-LOGO.webp"
-          alt=""
-        />
 
         <div class="box tab-scene0 -scene0 -scene1">
           <img src="text1-728x90.svg" class="copy" alt="" />
@@ -314,6 +381,15 @@
         <div class="box tab-scene1 -scene1">
           <img src="text2-728x90.svg" class="copy" alt="" />
         </div>
+
+        <img
+          class="corner-white-bg -scene0 -scene1"
+          src="corner-small.webp"
+          alt=""
+        />
+        <img class="ymca-logo -scene0 -scene1" src="YMCA-LOGO.webp" alt="" />
+
+        <div class="red-wipe -scene1"></div>
       </div>
 
       <div class="frame -scene2 end-card">
