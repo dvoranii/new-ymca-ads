@@ -320,7 +320,8 @@
       /* 5. SCENE STAGING & TIMELINE CONTROLS               */
       /* -------------------------------------------------- */
       /* Scene 0 */
-      [data-scene="0"] .bg-photo {
+      [data-scene="0"] .bg-photo,
+      [data-scene="1"] .bg-photo {
         animation: bgZoom 16300ms linear forwards;
       }
       [data-scene="0"] .tab-scene0 {
@@ -329,9 +330,6 @@
       }
 
       /* Scene 1 */
-      [data-scene="1"] .bg-photo {
-        animation: bgZoom 15000ms linear forwards;
-      }
       [data-scene="1"] .tab-scene0 {
         animation: tabSlideOut 400ms cubic-bezier(0.5, 0, 0.75, 0) forwards;
       }
