@@ -190,6 +190,14 @@
         z-index: 15;
       }
 
+      .subhead {
+        position: absolute;
+        bottom: 8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 140px;
+      }
+
       .cta {
         top: 105px;
         left: 0;
@@ -214,13 +222,12 @@
 
       .shine-logo {
         position: absolute;
-        top: 168px;
+        top: 153px;
         left: 50%;
         width: 165px;
         transform: translateX(-50%);
         z-index: 15;
       }
-
       /* -------------------------------------------------- */
       /* 4. KEYFRAME DEFINITIONS                            */
       /* -------------------------------------------------- */
@@ -346,7 +353,8 @@
       }
 
       /* Scene 2 (End Card) */
-      [data-scene="2"] .shine-logo {
+      [data-scene="2"] .shine-logo,
+      [data-scene="2"] .subhead {
         animation: textIn 250ms 100ms ease-out both;
       }
 
@@ -406,6 +414,7 @@
           src="shine-on-logo-300x250.webp"
           alt=""
         />
+        <img src="subhead.svg" class="subhead" alt="" />
       </div>
     </a>
 

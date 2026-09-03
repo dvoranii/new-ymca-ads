@@ -224,6 +224,14 @@
         z-index: 15;
       }
 
+      .subhead {
+        position: absolute;
+        width: 173px;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 76px;
+      }
+
       /* -------------------------------------------------- */
       /* 4. KEYFRAME DEFINITIONS                            */
       /* -------------------------------------------------- */
@@ -354,7 +362,8 @@
       }
 
       /* Scene 2 (End Card) */
-      [data-scene="2"] .shine-logo {
+      [data-scene="2"] .shine-logo,
+      [data-scene="2"] .subhead {
         animation: textIn 250ms 100ms ease-out both;
       }
 
@@ -401,7 +410,7 @@
       </div>
 
       <div class="frame -scene2 end-card">
-        <img src="fa-300x600.svg" class="headline -scene2" alt="" />
+        <img src="text3-300x600.svg" class="headline -scene2" alt="" />
 
         <div class="cta -scene2">
           <img src="Triangle.png" class="triangle" alt="" />
@@ -409,6 +418,11 @@
         </div>
 
         <img class="shine-logo abs -scene2" src="shine-on-logo.webp" alt="" />
+        <img
+          src="subhead.svg"
+          class="subhead"
+          alt="A charity that ignites the potential in people"
+        />
       </div>
     </a>
 

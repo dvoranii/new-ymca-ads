@@ -219,11 +219,18 @@
 
       .shine-logo {
         position: absolute;
-        top: 50%;
+        top: 38%;
         transform: translateY(-50%);
         right: 60px;
         width: 136px;
         z-index: 15;
+      }
+
+      .subhead {
+        position: absolute;
+        width: 123px;
+        bottom: 5px;
+        right: 66px;
       }
 
       /* -------------------------------------------------- */
@@ -356,7 +363,8 @@
       [data-scene="2"] .cta {
         animation: ctaSlideIn 740ms 1000ms cubic-bezier(0.16, 1, 0.3, 1) both;
       }
-      [data-scene="2"] .shine-logo {
+      [data-scene="2"] .shine-logo,
+      [data-scene="2"] .subhead {
         animation: textIn 250ms 100ms ease-out both;
       }
     </style>
@@ -399,6 +407,7 @@
         </div>
 
         <img class="shine-logo abs -scene2" src="shine-on-logo.webp" alt="" />
+        <img src="subhead.svg" class="subhead" alt="" />
       </div>
     </a>
 
